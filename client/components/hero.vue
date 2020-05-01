@@ -1,8 +1,8 @@
 <template>
   <v-img
     class="image_bg"
-    :src="desktop_bg.image"
-    :aspect-ratio="desktop_bg.aspectRatio"
+    :src="resize.image"
+    :aspect-ratio="resize.aspectRatio"
     alt=""
   >
     <div class="hero body">
@@ -35,7 +35,7 @@
           >Business Builder Elite</span
         >
         <v-spacer></v-spacer>
-        <v-list :color="color" flat
+        <v-list v-if="this.$vuetify.breakpoint.lgAndUp" :color="color" flat
           ><v-list-item-group>
             <v-list-item
               v-for="(item, i) in navLinks"
@@ -61,6 +61,7 @@ export default {
   data() {
     return {
       color: "rgba(0,0,0,0)",
+      xsOnly: null,
       navLinks: [
         {
           title: "Home",
@@ -83,11 +84,35 @@ export default {
         image: require("../assets/bg.png"),
         aspectRatio: 2
       },
+      tablet_bg: {
+        image: require("../assets/bg.png"),
+        aspectRatio: 1.3
+      },
       mobile_bg: {
         image: require("../assets/mobile_bg.png"),
         aspectRatio: 1
       }
     };
+  },
+  computed: {
+    resize() {
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return {
+          image: this.mobile_bg.image,
+          aspectRatio: this.mobile_bg.aspectRatio
+        };
+      } else if (this.$vuetify.breakpoint.xlOnly) {
+        return {
+          image: this.desktop_bg.image,
+          aspectRatio: this.desktop_bg.aspectRatio
+        };
+      } else {
+        return {
+          image: this.tablet_bg.image,
+          aspectRatio: this.tablet_bg.aspectRatio
+        };
+      }
+    }
   }
 };
 </script>
