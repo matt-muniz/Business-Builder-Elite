@@ -1,15 +1,18 @@
 <template>
   <div>
     <Hero />
+    <Info />
   </div>
 </template>
 
 <script>
 import Hero from "~/components/hero.vue";
+import Info from "~/components/info.vue";
 
 export default {
   components: {
-    Hero
+    Hero,
+    Info
   },
   data() {
     return {};

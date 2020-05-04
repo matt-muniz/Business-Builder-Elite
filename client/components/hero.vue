@@ -1,85 +1,98 @@
 <template>
-  <v-img
-    class="image_bg"
-    :src="resize.image"
-    :aspect-ratio="resize.aspectRatio"
-    alt=""
-  >
-    <div class="hero body">
-      <!-- System Bar -->
-      <v-system-bar class="pt-5" height="auto" :color="color">
-        <img class="mr-6" src="~/assets/facebook.svg" />
-        <img class="mr-6" src="~/assets/instagram.svg" />
-        <img class="mr-6" src="~/assets/twitter.svg" />
-        <img src="~/assets/linkedin.svg" />
-        <v-spacer></v-spacer>
-        <a href="mailto:socialmediateam@businessbuilderelite.com" class="mr-11"
-          ><img
-            class="mr-1"
-            src="~/assets/email.svg"
-          />socialmediateam@businessbuilderelite.com</a
-        >
-        <a href="tel:9783252105"
-          ><img class="mr-1" src="~/assets/phone.svg" />978-325-2105</a
-        >
-      </v-system-bar>
-      <!-- App Bar -->
-      <v-app-bar
-        class="app-bar pa-0"
-        style="margin-top: 94px"
-        flat
-        :color="color"
+  <client-only>
+    <v-img
+      class="image_bg"
+      :src="resize.image"
+      :aspect-ratio="resize.aspectRatio"
+      alt=""
+    >
+      <div
+        :class="{
+          desktop_body: $vuetify.breakpoint.lgAndUp,
+          mobile_body: $vuetify.breakpoint.mdAndDown
+        }"
       >
-        <img class="mr-1" src="~/assets/logo.svg" />
-        <span class="display-2 font-weight-black" style="color: #176D96"
-          >Business Builder Elite</span
+        <Nav :resize="resize" />
+        <div
+          class="heading-1"
+          :class="{
+            mobile: $vuetify.breakpoint.xsOnly,
+            heading1Mobile: $vuetify.breakpoint.xsOnly,
+            heading1Desktop: $vuetify.breakpoint.smAndUp
+          }"
         >
-        <v-spacer></v-spacer>
-        <v-list v-if="this.$vuetify.breakpoint.lgAndUp" :color="color" flat
-          ><v-list-item-group>
-            <v-list-item
-              v-for="(item, i) in navLinks"
-              :key="i"
-              class="text-right d-inline-flex font-weight-black"
-              active-class="highlighted"
-              nuxt
-              :to="item.to"
+          <span
+            class="heading"
+            :class="{
+              'display-3': $vuetify.breakpoint.smAndUp,
+              headline: $vuetify.breakpoint.xsOnly
+            }"
+            >Stop Struggling <br />
+            To Generate New <br />Business</span
+          >
+        </div>
+        <div
+          class="heading-2"
+          :class="{
+            mobile: $vuetify.breakpoint.xsOnly,
+            heading2Mobile: $vuetify.breakpoint.xsOnly,
+            heading2Desktop: $vuetify.breakpoint.smAndUp
+          }"
+        >
+          <span
+            class="heading"
+            :class="{
+              headline: $vuetify.breakpoint.smAndUp,
+              'subtitil-1': $vuetify.breakpoint.xsOnly
+            }"
+          >
+            Learn Our Prove Strategy <br />
+            For Driving In New Leads
+          </span>
+        </div>
+        <div
+          class="cta"
+          :class="{
+            mobile: $vuetify.breakpoint.xsOnly,
+            ctaMobile: $vuetify.breakpoint.xsOnly,
+            ctaDesktop: $vuetify.breakpoint.smAndUp
+          }"
+        >
+          <span
+            class="font-weight-black ctaTitle"
+            :class="{
+              title: $vuetify.breakpoint.smAndUp,
+              caption: $vuetify.breakpoint.xsOnly
+            }"
+          >
+            Book A Free <br />
+            Consultation Today
+          </span>
+          <div
+            :class="{
+              mobileBtn: $vuetify.breakpoint.xsOnly,
+              desktopBtn: $vuetify.breakpoint.smAndUp
+            }"
+          >
+            <v-btn class="white--text" color="#176d96" depressed
+              >Book Now</v-btn
             >
-              <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-app-bar>
-    </div>
-  </v-img>
+          </div>
+        </div>
+      </div>
+    </v-img>
+  </client-only>
 </template>
 
 <script>
+import Nav from "@/components/Nav";
+
 export default {
+  components: {
+    Nav
+  },
   data() {
     return {
-      color: "rgba(0,0,0,0)",
-      xsOnly: null,
-      navLinks: [
-        {
-          title: "Home",
-          to: "/"
-        },
-        {
-          title: "About Us",
-          to: "/about"
-        },
-        {
-          title: "Portfolio",
-          to: "/portfolio"
-        },
-        {
-          title: "Services",
-          to: "/services"
-        }
-      ],
       desktop_bg: {
         image: require("../assets/bg.png"),
         aspectRatio: 2
@@ -99,12 +112,14 @@ export default {
       if (this.$vuetify.breakpoint.xsOnly) {
         return {
           image: this.mobile_bg.image,
-          aspectRatio: this.mobile_bg.aspectRatio
+          aspectRatio: this.mobile_bg.aspectRatio,
+          body: true
         };
-      } else if (this.$vuetify.breakpoint.xlOnly) {
+      } else if (this.$vuetify.breakpoint.lgAndUp) {
         return {
           image: this.desktop_bg.image,
-          aspectRatio: this.desktop_bg.aspectRatio
+          aspectRatio: this.desktop_bg.aspectRatio,
+          showListItems: true
         };
       } else {
         return {
@@ -118,13 +133,49 @@ export default {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color: white;
+.mobile {
+  text-align: center;
+}
+.heading-1 {
+  color: #7eb7cd;
+}
+.heading1Desktop {
+  margin-top: 6.875rem;
+}
+.heading1Mobile {
+  margin-top: 2.25rem;
+}
+.heading-1 .display-3 {
+  line-height: 5rem;
+  font-weight: bold;
+}
+.heading-2 {
+  color: #7eb7cd;
+}
+.heading2Desktop {
+  margin-top: 4.6875rem;
+}
+.heading2Mobile {
+  margin-top: 1.125rem;
+}
+.ctaDesktop {
+  margin-top: 9.375rem;
+}
+.ctaMobile {
+  margin-top: 3.5625rem;
+}
+.ctaTitle {
+  color: #176d96;
+}
+.desktopBtn {
+  margin-top: 2.5rem;
+  margin-bottom: 5.125rem;
+}
+.mobileBtn {
+  margin-top: 0.625rem;
+  margin-bottom: 3.125rem;
 }
 .hero {
-  /* min-height: 100%; */
-  /* background: radial-gradient(#7465a7, #3a3354); */
   overflow: hidden;
 }
 </style>

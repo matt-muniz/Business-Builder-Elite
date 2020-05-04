@@ -22,11 +22,14 @@ export default {
 </script>
 
 <style>
-.body {
+.desktop_body {
   padding: 0 126px;
 }
+.mobile_body {
+  padding: 0 30px;
+}
 .v-toolbar__content {
-  padding: 0;
+  padding: 0 !important;
 }
 .v-tabs {
   width: 0;
@@ -39,7 +42,7 @@ export default {
 .v-list-item__title:hover {
   color: #176d96;
 }
-.highlighted .v-list-item__title::after {
+.highlighted .desktoptitle::after {
   content: "";
   position: absolute;
   bottom: -5px;
